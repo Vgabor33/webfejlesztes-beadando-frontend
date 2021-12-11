@@ -5,6 +5,7 @@ import Items from "./components/Items";
 import AddItems from "./components/AddItems";
 
 function App() {
+  const [showAddItem, setShowAddItem] = useState(false)
   const [items, setItems] = useState([
     {
         id: 1,
@@ -28,8 +29,9 @@ function App() {
     <div>
       <h1>Webfejlesztés beadandó projekt</h1>
       <div className="container">
-        <Header/>
-        <AddItems onAdd={addItem}/>
+        <Header onAdd={() => setShowAddItem(!showAddItem)}
+        showAdd={showAddItem}/>
+        {showAddItem && <AddItems onAdd={addItem}/>}
         {items.length > 0 ? <Items items={items} onDelete={deleteItem}/> : "No item"}
       </div>
     </div>
