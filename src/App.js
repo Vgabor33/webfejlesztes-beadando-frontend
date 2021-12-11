@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Items from "./components/Items";
 import AddItems from "./components/AddItems";
@@ -16,6 +16,23 @@ function App() {
         level: 1,
     }
   ]) 
+
+  useEffect(() => {
+    const getItems = async () => {
+      const itemsFromServer = await fetchItems()
+      setItems(itemsFromServer)
+    }
+    getItems()
+  }, [])
+
+  const fetchItems = async () => {
+    const res = await fetch(
+      "/api/v1/gameinventory")
+      const data = await res.json()
+
+      console.log(data)
+      return data
+  }
 
   const deleteItem = (id) => {
     setItems(items.filter((item) => item.id !== id))
