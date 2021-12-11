@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Items from "./components/Items";
 import AddItems from "./components/AddItems";
+import ModifyItem from "./components/ModifyItem";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
   const [showAddItem, setShowAddItem] = useState(false)
@@ -52,16 +55,38 @@ function App() {
     const data = await res.json()
     setItems([...items, data])
   }
+
+  const modifyItem = async (itemId, { itemName, rarity, itemClass, count, level }) => {
+		const res = await fetch(`/api/v1/gameinventory/${itemId}?itemName=${itemName}&rarity=${rarity}&itemClass=${itemClass}&count=${count}&level=${level}`, { 
+      method: 'PUT', 
+    })
+		const data = await res.json()
+
+		setItems(await fetchItems());
+	}
+
   return (
-    <div>
-      <h1>Webfejlesztés beadandó projekt</h1>
-      <div className="container">
-        <Header onAdd={() => setShowAddItem(!showAddItem)}
-        showAdd={showAddItem}/>
-        {showAddItem && <AddItems onAdd={addItem}/>}
-        {items.length > 0 ? <Items items={items} onDelete={deleteItem}/> : "No item"}
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={
+            <>
+            <h1>Webfejlesztés beadandó projekt</h1>
+          <div className="container">
+            <Header onAdd={() => setShowAddItem(!showAddItem)}
+            showAdd={showAddItem}/>
+            {showAddItem && <AddItems onAdd={addItem}/>}
+            {items.length > 0 ? <Items items={items} onDelete={deleteItem}/> : "No item"}
+          </div>
+            </>
+          }/>
+          <Route path="/modifyItem/:id" element={
+            <ModifyItem onModify={modifyItem} items={items}/>
+          }
+          />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
