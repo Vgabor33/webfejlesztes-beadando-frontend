@@ -1,11 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="App">
-     <h1>Webfejlesztés beadandó projekt</h1>
-     <h1></h1>
+    <div>
+      <h1>Webfejlesztés beadandó projekt</h1>
+      <div className="container">
+        <Header/>
+      </div>
     </div>
   );
 }
