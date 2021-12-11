@@ -9,16 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [showAddItem, setShowAddItem] = useState(false)
-  const [items, setItems] = useState([
-    {
-        id: 1,
-        itemName: 'vmi',
-        rarity: 6,
-        itemClass: "vmi",
-        count: 1,
-        level: 1,
-    }
-  ]) 
+  const [items, setItems] = useState([]) 
 
   useEffect(() => {
     const getItems = async () => {
