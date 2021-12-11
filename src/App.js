@@ -14,12 +14,17 @@ function App() {
         level: 1,
     }
   ]) 
+
+  const deleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id))
+  }
+
   return (
     <div>
       <h1>Webfejlesztés beadandó projekt</h1>
       <div className="container">
         <Header/>
-        <Items items={items}/>
+        {items.length > 0 ? <Items items={items} onDelete={deleteItem}/> : "No item"}
       </div>
     </div>
   );
