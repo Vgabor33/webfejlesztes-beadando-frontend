@@ -34,13 +34,23 @@ function App() {
       return data
   }
 
-  const deleteItem = (id) => {
+  const deleteItem = async (id) => {
+    await fetch(`/api/v1/gameinventory/${id}`,{
+      method: 'DELETE',
+    })
     setItems(items.filter((item) => item.id !== id))
   }
 
-  const addItem = (item) => {
-    const newItem = { ...item}
-    setItems([...items, newItem])
+  const addItem = async (item) => {
+    const res = await fetch("/api/v1/gameinventory", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(item)
+    })
+    const data = await res.json()
+    setItems([...items, data])
   }
   return (
     <div>
